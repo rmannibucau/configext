@@ -5,7 +5,6 @@ import com.github.rmannibucau.api.BootstrapConfig;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;
-import javax.enterprise.inject.spi.BeforeBeanDiscovery;
 import javax.enterprise.inject.spi.Extension;
 
 public abstract class BaseGoodCdiExtension implements Extension {
@@ -13,8 +12,8 @@ public abstract class BaseGoodCdiExtension implements Extension {
 
     protected abstract String key();
 
-    void start(@Observes final BeforeBeanDiscovery bbd) {
-        value = BootstrapConfig.current().getValues().get(key());
+    void start(@Observes final BootstrapConfig config) {
+        value = config.getValues().get(key());
     }
 
     void addBean(@Observes final AfterBeanDiscovery afterBeanDiscovery) {
